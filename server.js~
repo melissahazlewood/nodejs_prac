@@ -114,7 +114,25 @@ app.put('/users/:userID', (req, res) => {
 });
 
 app.delete('/delete/:userID', (req, res) => {
- // Delete a user by ID
+  // Delete a user by ID
+  try {
+  const id = req.params.userID;
+  let userIDX = users.findIndex((user) => user.id === id);
+  if (!userIDX) {
+  res.status(404).json({
+  message: "User not found",
+  });
+  }
+  users.splice(userIDX, 1);
+  res.status(200).json({
+  message: "Successfully deleted user",
+  users,
+  });
+  } catch (error) {
+  res.status(500).json({
+  message: "Failed to delete user",
+  });
+  }
 });
 
 app.delete('/users', (req, res) => {

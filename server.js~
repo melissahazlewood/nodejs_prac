@@ -68,12 +68,37 @@ app.get('/users', (req, res) => {
   }
 });
 
-app.get('/user/:userID', (req, res) => {
- // Returns a user by ID
+app.get('/users/:userID', (req, res) => {
+  // Returns a user by ID
+  const id = parseInt(req.params.userID);
+  console.log(id);
+  try {
+  let user = users.find( (elem) => elem.id === id );
+  if (!user) {
+  return res.status(404).json({
+  message: "User not found",
+  });
+  }
+  res.status(200).json({
+  user
+  });
+  } catch (error) {
+    res.status(500).json({
+    message: "Failed to retrieve user",
+  });
+  }
 });
 
-app.put('/user/:userID', (req, res) => {
- // Update a user by ID
+app.put('/users/:userID', (req, res) => {
+  // Update a user by ID
+  try {
+  const id = parseInt(req.params.userID);
+  let user = users.find((user) => user.id === id);
+  if (!user) {
+  return res.status(404).json({
+  message: "User not found",
+  });
+  }
 });
 
 app.delete('/delete/:userID', (req, res) => {

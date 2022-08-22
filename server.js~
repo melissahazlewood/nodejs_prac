@@ -99,6 +99,18 @@ app.put('/users/:userID', (req, res) => {
   message: "User not found",
   });
   }
+  const userIDX = users.indexOf(user);
+  users[userIDX].name = req.body.name || users[userIDX].name
+  users[userIDX].age = req.body.age || users[userIDX].age;
+  res.status(200).json({
+  message: "Successfully updated user",
+  user,
+  });
+  } catch (error) {
+  res.status.(500).json({
+  message: "Failed to retrieve user",
+  });
+  }
 });
 
 app.delete('/delete/:userID', (req, res) => {
